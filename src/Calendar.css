@@ -1,46 +1,54 @@
 .calendar {
-    width: 300px;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .header button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .header span {
-    font-weight: bold;
-  }
-  
-  .days-of-week, .days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-  }
-  
-  .day-of-week, .day {
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  .day {
-    border: 1px solid #ddd;
-    height: 50px;
-    line-height: 50px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-.daysInput{
-    width: 50%;
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.days-of-week {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
+
+.day-of-week {
+  width: 40px;
+  text-align: center;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+}
+
+.day {
+  width: 40px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fillAttendance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.daysInput {
+  width: 30px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.empty {
+  background-color: #f0f0f0;
 }
