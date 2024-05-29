@@ -11,10 +11,15 @@ const Calendar = () => {
   const prevAttendanceHoursRef = useRef();
 
   useEffect(() => {
+    let year = currentDate.getFullYear();
+    let month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    let day = String(currentDate.getDate()).padStart(2, '0');
+    let formattedDate = `${year}-${month}-${day}`;
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ employeeRef: 'EMP123' })
+      body: JSON.stringify({ employeeRef: 'EMP123', attendanceForDate:formattedDate})
+      
     };
     fetch('http://localhost:8081/attendance/getAttendanceForEmployee', requestOptions)
       .then(response => response.json())
@@ -32,7 +37,8 @@ const Calendar = () => {
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });
-  }, []);
+      console.log("making "+formattedDate);
+  }, [,currentDate]);
 
   useEffect(() => {
     prevAttendanceHoursRef.current = attendanceHours;
@@ -87,14 +93,38 @@ const Calendar = () => {
   for (let i = 1; i <= daysInMonth; i++) {
     days.push(i);
   }
-
   const previousMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    console.log("previousMonth"+currentDate);
   };
 
   const nextMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    
   };
+
+  console.log("nextMonth"+currentDate);
+  useEffect(() => {
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+  
+    const startDayOfWeek = startOfMonth.getDay();
+    const daysInMonth = endOfMonth.getDate();
+  
+    const today = new Date();
+    const isCurrentMonth = currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
+    const currentDay = isCurrentMonth ? today.getDate() : null;
+  
+    const days = [];
+    for (let i = 0; i < startDayOfWeek; i++) {
+      days.push('');
+    }
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(i);
+    }
+  }, [previousMonth,nextMonth]);
+
+  
 
   return (
     <div className="calendar">
